@@ -1,3 +1,11 @@
+<?php
+// menghubungkan database
+include "koneksi.php";
+
+?>
+
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -11,8 +19,8 @@
     <div class="container"> 
 
     <div class="mt-3">
-    <h3 class = "text-center" > CRUD MODAL PHP DAN MYSQL </h3>
-    <h3 class = "text-center" > ngoding pintar </h3>
+    <h3 class = "text-center" > DATA MAHASISWA UNIVERSITAS MUSTIKA </h3>
+    <h3 class = "text-center" > JL AHMAD YANI NO. 36A BLORA </h3>
 
     <div class="mt-3">
     <div class="card">
@@ -23,7 +31,7 @@
 
     
           <!-- Button trigger modal -->
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
           TAMBAH DATA
           </button>
 
@@ -36,7 +44,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                    <!-- awal isi modal/form isian -->
+                    <!-- awal isi modal/form isian data akan dikoneksikan ke file aksi-crud.php-->
                     <form method = "POST" action = "aksi_crud.php">
                         <div class="mb-3">
                         <label class="form-label">NIM</label>
@@ -62,14 +70,10 @@
                             <option value="S1 - Teknik Informatika"> S1 - Teknik Informatika </option>
                         </select>
                         </div>
-
-                    
-                   
-
-
+             
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-primary">Save</button>  
+                          <button type="submit" class="btn btn-primary" name="bsimpan" >Save</button>  
                           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
                         </div>
 
@@ -92,29 +96,30 @@
             <th>Aksi</th>
           </tr>
 
-          <tr>
-              <td>1</td>
-              <td>10502121</td>
-              <td>Muhammad Aziz</td>
-              <td>Blora</td>
-              <td>S1 Hukum</td>
-              <td>
-                <a href="#", class="btn btn-warning"> Ubah</a>
-                <a href="#", class="btn btn-danger"> Hapus</a>
-              </td>
-          </tr>
+          <?php
+          // persiapan menampilkan data
+          $no = 1;
+          $tampil = mysqli_query($koneksi,"SELECT * FROM thms ORDER BY id_mhs DESC");
+          while ($data = mysqli_fetch_array($tampil)) :
+          
+          
+          ?>
+
+
 
           <tr>
-              <td>2</td>
-              <td>10502133</td>
-              <td>Cytia Sulistyani</td>
-              <td>Malang</td>
-              <td>S1 Psikologi</td>
+              <td><?= $no++ ?></td>
+              <td><?=$data['nim']?></td>
+              <td><?=$data['nama']?></td>
+              <td><?=$data['alamat']?></td>
+              <td><?=$data['prodi']?></td>
               <td>
                 <a href="#", class="btn btn-warning"> Ubah</a>
                 <a href="#", class="btn btn-danger"> Hapus</a>
               </td>
           </tr>
+         
+              <?php endwhile; ?>
           </table>
           <!-- akhir tabel -->
 
